@@ -6,7 +6,7 @@ import { setContext } from "apollo-link-context";
 import { onError } from "apollo-link-error";
 import {message} from "antd";
 
-const httpLink = createHttpLink({ uri: "http://localhost:5001" });
+const httpLink = createHttpLink({ uri: "/graphql" });
 
 const authLink = setContext(() => {
     const token = localStorage.getItem("jwtToken");

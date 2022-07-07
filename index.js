@@ -18,7 +18,10 @@ new mongoose.connect(
     { useNewUrlParser: true }
 ).then(() => {
     console.log("MongoDB Connected");
-    return server.listen({ port: 5001, host: '' },);
+    return server.listen({ port: process.env.PORT|| 5001, host: '' },);
 }).then(res => {
-    console.dir(`🚀 Server ready at ${res.url}`);
+    console.dir(`
+     🚀 Server ready at ${res.url}
+     📭  Query at https://studio.apollographql.com/dev
+    `);
 })
