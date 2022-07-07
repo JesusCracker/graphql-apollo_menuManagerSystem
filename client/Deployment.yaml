@@ -1,0 +1,50 @@
+# create deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${service_name}
+  namespace: ${namespace}
+spec:
+  selector:
+    matchLabels:
+      app: ${service_name}
+  replicas: 1
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        app: ${service_name}
+    spec:
+      containers:
+      - name: ${service_name}
+        image: ${harbor_url}/${harbor_repo}:${BUILD_NUMBER}
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 10
+
+# create service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${service_name}
+  namespace: ${namespace}
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: ${service_name}

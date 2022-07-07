@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit"/>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <script type="text/javascript">
+        window.point = {};
+        window.point.start = new Date().getTime();</script>
+    <script type="text/javascript">(function () {
+            if (location.href.indexOf('accessToken') > -1) {
+                window.localStorage.setItem('loginInfo', JSON.stringify({accessToken: location.search.substr(1).split('&').find(r => r.indexOf('accessToken') > -1).split('=')[1]}));
+                location.replace(location.href.split("?")[0] + (location.href.replace('?&', '?').indexOf('&') === -1 ? '' : '?') + location.search.substr(1).split('&').filter(r => r.indexOf('accessToken=') === -1).join('&') + (location.href.indexOf("#/") > -1 ? '#/' + location.href.split("#/")[1] : ''));
+            }
+            function showLoading() {
+                const pageLoading = document.createElement('DIV');
+                pageLoading.id = 'pageLoading';
+                Array.prototype.slice.call(['shape1', 'shape2', 'shape3', 'shape4']).forEach(item => {
+                    pageLoading.innerHTML += `<div class="shape  + ${item}"></div>`;
+                });
+                document.body.appendChild(pageLoading);
+            }
+            window.addEventListener('load', function () {
+                if ('complete' === document.readyState && !!document.getElementById('pageLoading')) {
+                    document.getElementById('pageLoading').remove();
+                }
+            })
+            // 文档已经结束了“正在加载”状态，DOM元素可以被访问。
+            // 设置加载状态
+            document.addEventListener('readystatechange', function () {
+                if ('interactive' === document.readyState && !!document.body && document.getElementById('pageLoading') === null) {
+                    showLoading();
+                }
+            })
+            // 当初始的 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，而无需等待样式表、图像和子框架的完全加载
+            document.addEventListener('DOMContentLoaded', function () {
+                if (!!document.body && document.getElementById('pageLoading') === null) {
+                    showLoading();
+                }
+            })
+        })();
+    </script>
+    <style>
+        body {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            overflow: auto;
+        }
+        #pageLoading {
+            width: 30px;
+            height: 30px;
+            z-index: 2000;
+            position: fixed;
+            top: calc(50% - 15px);
+            left: calc(50% - 15px);
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            -webkit-animation: rotation 1s infinite;
+            animation: rotation 1s infinite;
+        }
+        #pageLoading .shape {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+        }
+        #pageLoading .shape1 {
+            left: 0;
+            background-color: #5C6BC0;
+            -webkit-animation: animation4shape1 0.3s ease 0s infinite alternate;
+            animation: animation4shape1 0.3s ease 0s infinite alternate;
+        }
+        #pageLoading .shape2 {
+            right: 0;
+            background-color: #8BC34A;
+            -webkit-animation: animation4shape2 0.3s ease 0.3s infinite alternate;
+            animation: animation4shape2 0.3s ease 0.3s infinite alternate;
+        }
+        #pageLoading .shape3 {
+            bottom: 0;
+            background-color: #FFB74D;
+            -webkit-animation: animation4shape3 0.3s ease 0.3s infinite alternate;
+            animation: animation4shape3 0.3s ease 0.3s infinite alternate;
+        }
+        #pageLoading .shape4 {
+            bottom: 0;
+            right: 0;
+            background-color: #F44336;
+            -webkit-animation: animation4shape4 0.3s ease 0s infinite alternate;
+            animation: animation4shape4 0.3s ease 0s infinite alternate;
+        }
+        @-webkit-keyframes rotation {
+            from {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            to {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes rotation {
+            from {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            to {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @-webkit-keyframes animation4shape1 {
+            from {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+            to {
+                -webkit-transform: translate(5px, 5px);
+                transform: translate(5px, 5px);
+            }
+        }
+        @keyframes animation4shape1 {
+            from {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+            to {
+                -webkit-transform: translate(5px, 5px);
+                transform: translate(5px, 5px);
+            }
+        }
+        @-webkit-keyframes animation4shape2 {
+            from {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+            to {
+                -webkit-transform: translate(-5px, 5px);
+                transform: translate(-5px, 5px);
+            }
+        }
+        @keyframes animation4shape2 {
+            from {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+            to {
+                -webkit-transform: translate(-5px, 5px);
+                transform: translate(-5px, 5px);
+            }
+        }
+        @-webkit-keyframes animation4shape3 {
+            from {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+            to {
+                -webkit-transform: translate(5px, -5px);
+                transform: translate(5px, -5px);
+            }
+        }
+        @keyframes animation4shape3 {
+            from {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+            to {
+                -webkit-transform: translate(5px, -5px);
+                transform: translate(5px, -5px);
+            }
+        }
+        @-webkit-keyframes animation4shape4 {
+            from {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+            to {
+                -webkit-transform: translate(-5px, -5px);
+                transform: translate(-5px, -5px);
+            }
+        }
+        @keyframes animation4shape4 {
+            from {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+            to {
+                -webkit-transform: translate(-5px, -5px);
+                transform: translate(-5px, -5px);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.publicPath %>dll/common.dll.css">
+</head>
+<body>
+<noscript style="text-align: center;font-size: 30px;color: #cd5c5c;display: block;">:^_^: JavaScript被禁用了</noscript>
+<div id="root"></div>
+<div id="app-root"></div>
+<div id="pageLoading"><div class="shape shape1"></div><div class="shape shape2"></div><div class="shape shape3"></div><div class="shape shape4"></div></div>
+<script type="text/javascript" src="<%= htmlWebpackPlugin.options.publicPath %>dll/common.dll.js"></script>
+</body>
+</html>
