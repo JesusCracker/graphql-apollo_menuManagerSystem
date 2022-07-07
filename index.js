@@ -18,7 +18,7 @@ new mongoose.connect(
     { useNewUrlParser: true }
 ).then(() => {
     console.log("MongoDB Connected");
-    return server.listen({ port: 5001, host: '192.168.100.158' },);
+    return server.listen({ port: 5001, host: '' },);
 }).then(res => {
     console.dir(`🚀 Server ready at ${res.url}`);
 })
